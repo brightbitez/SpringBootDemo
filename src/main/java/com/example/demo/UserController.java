@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,13 +29,13 @@ public class UserController {
     @GetMapping("/users")
     public PagingResponse getAllUser(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(name = "item_per_page", defaultValue = "10") int itemPerPage) {
+            @RequestParam(name = "item_per_page", defaultValue = "2") int itemPerPage) {
 
         PagingResponse pagingResponse = new PagingResponse(page, itemPerPage);
         List<UsersResponse> usersResponseList = new ArrayList<>();
 
-        Iterable<User> users = userRepository.findAll();
-        for (User user: users) {
+        Page<User> users = userRepository.findAll(PageRequest.of(0,itemPerPage));
+        for (User user: users.getContent()) {
             usersResponseList.add(new UsersResponse(user.getId(), user.getName()));
         }
 
