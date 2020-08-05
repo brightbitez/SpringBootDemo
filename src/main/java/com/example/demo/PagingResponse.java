@@ -1,17 +1,31 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.util.List;
 
+@JsonPropertyOrder({"page", "item_per_page", "users"})
 public class PagingResponse {
-    private List<UserResponse> userResponseList;
-    private int page,itemPerPage;
+    @JsonProperty("users")
+    private List<UsersResponse> usersResponseList;
 
-    public List<UserResponse> getUserResponseList() {
-        return userResponseList;
+    private int page;
+
+    @JsonProperty("item_per_page")
+    private int itemPerPage;
+
+    public PagingResponse(int page, int itemPerPage) {
+        this.page = page;
+        this.itemPerPage = itemPerPage;
     }
 
-    public void setUserResponseList(List<UserResponse> userResponseList) {
-        this.userResponseList = userResponseList;
+    public void setUsersResponse(List<UsersResponse> usersResponseList) {
+        this.usersResponseList = usersResponseList;
+    }
+
+    public List<UsersResponse> getUsersResponseList() {
+        return usersResponseList;
     }
 
     public int getPage() {
