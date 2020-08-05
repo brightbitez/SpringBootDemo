@@ -1,13 +1,12 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonPropertyOrder({"page","itemPerPage","users"})
 @RestController
 public class UserController {
     @GetMapping("/users")
@@ -27,4 +26,8 @@ public class UserController {
         return new UserResponse(id, "User " + id);
     }
 
+    @PostMapping("/users")
+    public UserResponse createNewUser(NewUserRequest request){
+        return new UserResponse(0,request.getName() + request.getAge());
+    }
 }
