@@ -11,11 +11,16 @@ import java.util.List;
 @RestController
 public class UserController {
     @GetMapping("/users")
-    public List<UserResponse> getAllUsers(@RequestParam(required = false) int page, int itemPerPage){
-        List<UserResponse> userResponses = new ArrayList<>();
-        userResponses.add(new UserResponse(1,"user1"));
-        userResponses.add(new UserResponse(2,"user2"));
-        return userResponses;
+    public PagingResponse getAllUsers(@RequestParam(required = false,defaultValue = "2") int page,
+                                      @RequestParam(defaultValue = "15") int itemPerPage){
+        PagingResponse pagingResponse = new PagingResponse();
+        List<UserResponse> userResponseList = new ArrayList<>();
+        userResponseList.add(new UserResponse(1,"bomb"));
+        userResponseList.add(new UserResponse(2,"dang"));
+        pagingResponse.setUserResponseList(userResponseList);
+        pagingResponse.setItemPerPage(15);
+        pagingResponse.setPage(2);
+        return pagingResponse;
     }
     @GetMapping("/users/{id}")
     public UserResponse getUserById(@PathVariable int id){
